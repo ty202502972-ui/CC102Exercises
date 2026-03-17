@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+void analyzeGrades(int *grades, int students, int subjects) {
+    int highest = 0;
+
+    cout << "\nGrade Matrix:\n";
+    for(int i = 0; i < students; i++) {
+        for(int j = 0; j < subjects; j++) {
+            int value = *(grades + i * subjects + j);
+            cout << value << " ";
+
+            if(value > highest) {
+                highest = value;
+            }
+        }
+        cout << endl;
+    }
+
+    cout << "\nAverage Grade of Each Student:\n";
+    for(int i = 0; i < students; i++) {
+        int sum = 0;
+
+        for(int j = 0; j < subjects; j++) {
+            sum += *(grades + i * subjects + j);
+        }
+
+        float average = (float)sum / subjects;
+        cout << "Student " << i + 1 << ": " << average << endl;
+    }
+
+    cout << "\nHighest Grade in the Matrix: " << highest << endl;
+}
+
+int main() {
+    int students, subjects;
+
+    cout << "Enter number of students: ";
+    cin >> students;
+
+    cout << "Enter number of subjects: ";
+    cin >> subjects;
+
+    int grades[50][50];
+
+    cout << "\nEnter grades:\n";
+    for(int i = 0; i < students; i++) {
+        for(int j = 0; j < subjects; j++) {
+            cout << "Student " << i + 1 << ", Subject " << j + 1 << ": ";
+            cin >> grades[i][j];
+        }
+    }
+
+    analyzeGrades(&grades[0][0], students, subjects);
+
+    return 0;
+}
