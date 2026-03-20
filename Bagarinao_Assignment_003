@@ -1,0 +1,103 @@
+#include<iostream>
+#include<string>
+#include<iomanip>
+using namespace std;
+
+string getstanding(float gpa){
+    if(gpa>=90 && gpa<=100){
+        return "Excellent";
+    }else if(gpa>=80){
+        return "Very Good";
+    }else if(gpa>=70){
+        return "Good";
+    }else if(gpa>=60){
+        return "Passing";
+    }else{
+        return "Failed";
+    }
+}
+
+// INPUT FUNCTION
+void input(struct student s[], int n){
+    for(int i=0; i<n; i++){
+        cout << "\nStudent " << i+1 << endl;
+
+        bool isUnique;
+        do{
+            isUnique = true;
+
+            cout << "Enter student ID: ";
+            cin >> s[i].studentID;
+
+            for(int j=0; j<i; j++){
+                if(s[i].studentID == s[j].studentID){
+                    cout << "ID already exist! Enter again\n";
+                    isUnique = false;
+                    break;
+                }
+            }
+        }while(!isUnique);
+        cin.ignore();
+
+        cout << "Enter name: ";
+        getline(cin, s[i].name);
+
+        cout << "Enter course: ";
+        getline(cin, s[i].course);
+
+        cout << "Enter GPA (0-100): ";
+        cin >> s[i].gpa;
+
+        s[i].standing = getstanding(s[i].gpa);
+    }
+}
+
+// DISPLAY FUNCTION
+void display(struct student s[], int n){
+    cout << "\n===== STUDENT RECORD =====\n";
+    cout << left << setw(15) << "StudentID"
+         << setw(20) << "Name"
+         << setw(15) << "Course"
+         << setw(10) << "GPA"
+         << setw(20) << "Standing" << endl;
+
+    cout << "--------------------------------------------------------------------------\n";
+
+    for(int i=0; i<n; i++){
+        cout << left << setw(15) << s[i].studentID
+             << setw(20) << s[i].name
+             << setw(15) << s[i].course
+             << setw(10) << s[i].gpa
+             << setw(20) << s[i].standing << endl;
+    }
+}
+
+int main(){
+    struct student{
+        int studentID;
+        string name;
+        string course;
+        float gpa;
+        string standing;
+    };
+
+    char ans;
+
+    do{
+        int n;
+
+        cout << "Enter number of student: ";
+        cin >> n;
+
+        student s[n];
+
+        input(s, n);     // pass struct to function
+        display(s, n);   // pass struct to function
+
+        cout << "\nRepeat? ";
+        cin >> ans;
+
+    }while(ans == 'y' || ans == 'Y');
+
+    return 0;
+}
