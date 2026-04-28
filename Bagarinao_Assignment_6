@@ -1,0 +1,33 @@
+#include <iostream>
+#include <fstream>
+#include <cmath>
+
+bool isPrime(int n) {
+    if (n < 2) return false;
+    for (int i = 2; i <= std::sqrt(n); i++) {
+        if (n % i == 0) return false;
+    }
+    return true;
+}
+
+int main() {
+    std::ifstream file("NUMS.TXT");
+    int number;
+    int count = 0;
+
+    if (!file) {
+        std::cout << "File error" << std::endl;
+        return 1;
+    }
+
+    while (file >> number) {
+        if (isPrime(number)) {
+            count++;
+        }
+    }
+
+    std::cout << count << std::endl;
+
+    file.close();
+    return 0;
+}
